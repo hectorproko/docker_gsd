@@ -1,24 +1,25 @@
+#Defining two application microsertices.
 version: "3.8"
-services:
-  web-fe:
-    build: .
-    command: python app.py
-    ports:
+services: 
+  web-fe: #Python Flask
+    build: . #This will call Dockerfile to build an image and then
+    command: python app.py #set this app to run when container starts
+    ports: #port 5000 on container to 5000 on docker host
       - target: 5000
         published: 5000
-    networks:
+    networks: #attaching to this network
       - counter-net
-    volumes:
+    volumes: #mounting this host
       - type: volume
         source: counter-vol
-        target: /code
-  redis:
+        target: /code #End of Python Flask
+  redis: #Pulls a stock image from Docker hub and it attaches to the same network
     image: "redis:alpine"
     networks:
       counter-net:
 
-networks:
+networks: #Tells docker to create a network
   counter-net:
 
-volumes:
+volumes: #and a volume
   counter-vol:
